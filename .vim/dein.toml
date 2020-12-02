@@ -1,0 +1,50 @@
+# ColorScheme: hybrid and init
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+    set background=dark
+    au VimEnter * nested colorscheme hybrid
+    '''
+# lightline use 'jellybeans'
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+    let g:lightline = {
+        \ 'colorscheme': 'jellybeans',
+    \ }
+'''
+
+# fuzzy finder
+[[plugins]]
+repo = 'junegunn/fzf'
+build_on = '''
+./install -all
+'''
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+
+# markdown viewer
+[[plugins]]
+repo = 'previm/previm'
+hook_add = '''
+    " xterm format
+    let g:previm_open_cmd = 'firefox'
+    " real time preview
+    let g:previm_enable_realtime = 1
+'''
+# easy create table
+[[plugins]]
+repo = 'mattn/vim-maketable'
+
+# japanese help
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+# realtime substitution
+[[plugins]]
+repo = 'markonm/traces.vim'
+
+# translation en to ja
+[[plugins]]
+repo = 'skanehira/translate.vim'
+

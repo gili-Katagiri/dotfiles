@@ -1,0 +1,102 @@
+" dein.vim settings ----------------------
+" install dir {{{
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+" }}}
+" dein installation check {{{
+if &runtimepath !~# '/dein.vim'
+    if !isdirectory(s:dein_repo_dir)
+        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+    endif
+    execute 'set runtimepath^=' . s:dein_repo_dir
+endif
+" }}}
+" begin settings {{{
+if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir)
+    " .toml file
+    let s:rc_dir = expand('~/.vim')
+    if !isdirectory(s:rc_dir)
+        call mkdir(s:rc_dir, 'p')
+    endif
+    let s:toml = s:rc_dir . '/dein.toml'
+    " read toml and cache
+    call dein#load_toml(s:toml, {'lazy': 0})
+    " end settings
+    call dein#end()
+    call dein#save_state()
+endif
+" }}}
+" plugin installation check {{{
+if dein#check_install()
+    call dein#install()
+endif
+" }}}
+" plugin remove check {{{
+let s:removed_plugins = dein#check_clean()
+if len(s:removed_plugins) > 0
+    call map(s:removed_plugins, "delete(v:val, 'rf')")
+    call dein#recache_runtimepath()
+endif
+" }}}
+" end dein.vim settings ------------------
+
+
+" set japanese help
+set helplang=ja
+
+set fileencodings=utf-8,cp932
+set clipboard+=unnamed
+syntax enable
+
+" current window highlight
+" based on 'hybrid' colorscheme
+autocmd ColorScheme * highlight NormalNC ctermfg=250 ctermbg=236 guifg=#c5c8c6 guibg=#1d1f21
+autocmd WinEnter,BufWinEnter * setlocal wincolor=Normal
+autocmd WinLeave * setlocal wincolor=NormalNC
+
+" file save options
+" backup
+set writebackup 
+set nobackup
+" swapfile
+set noswapfile
+
+" auto reload file if detected changing outside of Vim
+set autoread
+" enable to open another file even if buff-file is not saved
+set hidden
+
+" display row number and current cursor line
+set number
+set cursorline
+" no-cursorcolumn
+set nocursorcolumn
+" notify whether )}] matched
+set showmatch
+
+" other options
+set smartindent
+set novisualbell
+" enable to move empty-character point
+set virtualedit=onemore
+
+" status line
+set showcmd
+set laststatus=2
+set wildmenu
+set wildmode=list:longest
+
+" print tab as >--
+set list listchars=tab:\>\-
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+" search options
+set ignorecase
+set smartcase
+set incsearch
+set wrapscan
+set hlsearch
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
