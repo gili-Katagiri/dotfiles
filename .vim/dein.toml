@@ -14,6 +14,67 @@ hook_add = '''
     \ }
 '''
 
+# Completion
+#
+# deoplete requires:
+# $ pip3 install --user msgpack
+# nvim-yarp requires:
+# $ pip3 install --user pynvim
+#[[plugins]]
+#repo = 'Shougo/deoplete.nvim'
+#hook_add = '''
+#    if !has('nvim')
+#       call dein#add('roxma/nvim-yarp')
+#       call dein#add('roxma/vim-hug-neovim-rpc')
+#    endif
+#    let g:deoplete#enable_at_startup = 1
+#'''
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merge = 0
+rev = 'release'
+hook_add = '''
+    autocmd FileType json syntax match Comment +\/\/.\+$+
+    " coc-nvim recommended setting
+    " select competeion-item by Enter
+    " <C-g>u used INSERT mode, set undo level each enter
+    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " select first competeion item if no item has been selected
+    inoremap <silent><expr> <CR> pumvisible() ?
+       \coc#_select_confirm() : "\<C-g>u\<CR>"
+    
+    " Map <tab>(, <s-tab>) to trigger completion and
+    " navigate to the next (, previous) item: 
+    function! s:check_back_space() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+    inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+'''
+
+#[[plugins]]
+#repo = 'dense-analysis/ale'
+#hook_add = '''
+#    " recommended settings -- :ALEFixSuggest
+#    let g:ale_fixers = {
+#    \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+#    \   'javascript': ['eslint'],
+#    \}
+#    " automatically fix at file saved
+#    let g:ale_fix_on_save = 1
+#
+#    call deoplete#custom#option('sources', {
+#    \   '_': ['ale'],
+#    \})
+#    let g:ale_completion_enabled = 1
+#    let g:ale_completion_autoimport = 1
+#'''
+
 # fuzzy finder
 [[plugins]]
 repo = 'junegunn/fzf'
@@ -44,7 +105,10 @@ repo = 'vim-jp/vimdoc-ja'
 [[plugins]]
 repo = 'markonm/traces.vim'
 
+# surrond action
+[[plugins]]
+repo = 'tpope/vim-surround'
+
 # translation en to ja
 [[plugins]]
 repo = 'skanehira/translate.vim'
-

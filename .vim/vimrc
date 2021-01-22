@@ -47,6 +47,7 @@ set helplang=ja
 
 set fileencodings=utf-8,cp932
 set clipboard+=unnamed
+
 syntax enable
 
 " current window highlight
@@ -70,10 +71,14 @@ set hidden
 " display row number and current cursor line
 set number
 set cursorline
+" sign-column with number-column
+set signcolumn=number
 " no-cursorcolumn
 set nocursorcolumn
 " notify whether )}] matched
 set showmatch
+" but not show long time
+let loaded_matchparen = 1
 
 " other options
 set smartindent
@@ -88,7 +93,7 @@ set wildmenu
 set wildmode=list:longest
 
 " print tab as >--
-set list listchars=tab:\>\-
+set list lcs=tab:>-
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -99,4 +104,4 @@ set smartcase
 set incsearch
 set wrapscan
 set hlsearch
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
+nmap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
