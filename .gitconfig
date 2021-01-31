@@ -1,0 +1,10 @@
+[user]
+	email = kt.giri1425@gmail.com
+	name = gili-Katagiri
+[tool]
+	editor = vim
+[core]
+	editor = vim -c \"set fenc=utf-8\"
+[alias]
+	dlog = log --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=iso
+	dst = status --short --branch
