@@ -82,6 +82,8 @@ let loaded_matchparen = 1
 
 " other options
 set smartindent
+" write '#' at current cursor
+inoremap # X<C-h>#
 set novisualbell
 " enable to move empty-character point
 set virtualedit=onemore
@@ -93,10 +95,11 @@ set wildmenu
 set wildmode=list:longest
 
 " print tab as >--
-set list lcs=tab:>-
-set expandtab
-set tabstop=4
+set tabstop=8
+set softtabstop=4
 set shiftwidth=4
+set noexpandtab
+set list listchars=tab:>-,trail:-
 
 " search options
 set ignorecase

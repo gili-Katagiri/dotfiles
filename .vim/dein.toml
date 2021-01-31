@@ -57,6 +57,21 @@ hook_add = '''
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 '''
 
+# html tag creater
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+    " enable just for html/css
+    let g:user_emmet_install_global = 0
+    autocmd FileType html,css EmmetInstall
+    " setting
+    let g:user_emmet_settings = {
+    \   'variables': {
+    \       'lang': 'ja',
+    \   },
+    \}
+'''
+
 #[[plugins]]
 #repo = 'dense-analysis/ale'
 #hook_add = '''
