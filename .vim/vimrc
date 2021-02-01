@@ -58,10 +58,12 @@ autocmd WinLeave * setlocal wincolor=NormalNC
 
 " file save options
 " backup
-set writebackup 
+set writebackup
 set nobackup
 " swapfile
 set noswapfile
+" no-swapfile but use coc.nvim for update: recommended 300
+set updatetime=300
 
 " auto reload file if detected changing outside of Vim
 set autoread
@@ -90,6 +92,7 @@ set virtualedit=onemore
 
 " status line
 set showcmd
+set cmdheight=2
 set laststatus=2
 set wildmenu
 set wildmode=list:longest
@@ -108,3 +111,7 @@ set incsearch
 set wrapscan
 set hlsearch
 nmap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
+
+" Insert-mode line move
+inoremap <C-H> <Home>
+inoremap <C-L> <End>
