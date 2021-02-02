@@ -1,10 +1,14 @@
 {
 	"suggest.echodocSupport": true,
 	"suggest.maxCompleteItemCount": 20,
-	"eslint.autoFixOnSave": true,
+	"tsserver.enable": true,
+	"typescript.validate.enable": true,
+	"javascript.validate.enable": true,
+	"typescript.format.enabled": true,
+	"javascript.format.enabled": true,
 	"coc.preferences.formatOnSaveFiletypes": [
-		"javascript",
 		"typescript",
+		"javascript",
 		"json"
 	]
 }

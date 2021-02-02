@@ -50,6 +50,7 @@ hook_add = '''
        \'coc-json',
        \'coc-tsserver',
        \'coc-eslint',
+       \'coc-vetur',
     \]
     " integration with lightline
     " ref g:lightline.componet_function
@@ -98,6 +99,9 @@ hook_add = '''
 	    execute '!' . &keywordprg . " " . expand('<cword>')
 	endif
     endfunction
+
+    "call format by :Format
+    command! -nargs=0 Format :call CocAction('format')
 '''
 
 # html tag creater

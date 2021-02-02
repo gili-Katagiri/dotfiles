@@ -1,0 +1,23 @@
+{
+	// ref: Vue.js Hands on P151
+	"tsserver.tsdk": "./node_modules/typescript/lib",
+	"javascript.validate.enable": false,
+	"typescript.validate.enable": true,
+	"eslint.format.enable": true,
+	"eslint.autoFixOnSave": true,
+	"eslint.validate": [
+		"javascript",
+		"typescript",
+		"vue"
+	],
+	"vetur.experimental.templateInterpolationService": true,
+	"vetur.validation.script": true,
+	"vetur.validation.style": false,
+	"vetur.validation.template": false,
+	"vetur.format.enable": true,
+	"coc.preferences.formatOnSaveFiletypes": [
+		"javascript",
+		"typescript",
+		"vue"
+	]
+}
