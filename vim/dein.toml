@@ -51,6 +51,7 @@ hook_add = '''
        \'coc-tsserver',
        \'coc-eslint',
        \'coc-vetur',
+       \'coc-stylelint',
     \]
     " integration with lightline
     " ref g:lightline.componet_function
@@ -108,9 +109,9 @@ hook_add = '''
 [[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
-    " enable just for html/css
+    " enable just for html/css/vue
     let g:user_emmet_install_global = 0
-    autocmd FileType html,css EmmetInstall
+    autocmd FileType html,css,vue EmmetInstall
     " setting
     let g:user_emmet_settings = {
     \   'variables': {
