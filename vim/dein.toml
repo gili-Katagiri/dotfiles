@@ -140,10 +140,7 @@ hook_add = '''
 
 # fuzzy finder
 [[plugins]]
-repo = 'junegunn/fzf'
-build_on = '''
-./install -all
-'''
+repo = '/home/gilito/.config/fzf'
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 
