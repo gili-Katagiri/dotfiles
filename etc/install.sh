@@ -33,6 +33,7 @@ case $confirm in
 esac
 
 # INSTALL ==========
+# after setup.sh
 cd ${XDG_CONFIG_HOME}
 xdg_path=$(pwd)
 LOCAL_BIN_PATH="${HOME}"/.local/bin
@@ -50,9 +51,11 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ./fzf
 # add .local/bin/fzf
 ln -snv "${xdg_path}"/fzf/bin/fzf "${LOCAL_BIN_PATH}"/fzf
 # extract the lines after "# Auto-completion"
+tmp_number=$(sed -n '/Auto-completion/=' ./fzf/fzf.zsh)
 cat >> "${INITIAL_SETTING_RC}" << EOF
-#fzf basic config
-$(tail -n +$(sed -n '/Auto-completion/=' ./fzf/fzf.zsh) ./fzf/fzf.zsh)
+# fzf basic config
+$(tail -n +${tmp_number} ./fzf/fzf.zsh | sed '/^$/d')
+
 EOF
 
 ## use as vim-plugin
