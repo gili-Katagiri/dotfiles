@@ -2,7 +2,8 @@
 
 set -u
 
-XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+XDG_PATH=$(realpath ${XDG_CONFIG_HOME:-$HOME/.config})
+INSTALL_PATH="${HOME}"/.local/opt
 
 # ENVIRONMENT ==========
 dependency_commands=("git")
@@ -18,51 +19,55 @@ done
 
 echo -n "
 Confirm installation environment:
-  XDG-config Home: ${XDG_CONFIG_HOME}
+  XDG config Home: ${XDG_PATH}
+  install to: ${INSTALL_PATH}
 
 Are you OK? (Y/n): "
 read confirm
 case $confirm in 
     [Yy]|[Yy][Ee][Ss])
-	echo START!
 	;;
     *)
-	echo QUIT
 	exit 1
 	;;
 esac
 
 # INSTALL ==========
 # after setup.sh
-cd ${XDG_CONFIG_HOME}
-xdg_path=$(pwd)
-LOCAL_BIN_PATH="${HOME}"/.local/bin
-INITIAL_SETTING_RC="${HOME}"/.local/etc/initrc.zsh
+lbp="${HOME}"/.local/bin
+isrc="${HOME}"/.local/etc/initrc.zsh
 
 # FZF -----
 # install fzf as ${XDG_CONFIG_HOME}/fzf from GitHub
-git clone --depth 1 https://github.com/junegunn/fzf.git ./fzf
+if [ ! -d "${INSTALL_PATH}/fzf" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git "${INSTALL_PATH}"/fzf
+    # Init
+    # create ~/fzf.zsh but not update zshrc.
+    "${INSTALL_PATH}"/fzf/install\
+      --key-bindings --completion --no-update-rc \
+      --no-bash --no-fish
 
-# Init
-# create ${XDG_CONFIG_HOME}/fzf/fzf.zsh but not update zshrc.
-./fzf/install\
-  --xdg --key-bindings --completion --no-update-rc \
-  --no-bash --no-fish
-# add .local/bin/fzf
-ln -snv "${xdg_path}"/fzf/bin/fzf "${LOCAL_BIN_PATH}"/fzf
-# extract the lines after "# Auto-completion"
-tmp_number=$(sed -n '/Auto-completion/=' ./fzf/fzf.zsh)
-cat >> "${INITIAL_SETTING_RC}" << EOF
+    # cp "${XDG_PATH}/fzf/fzf.zsh "${INSTALL_PATH}/fzf/ ???
+    mv "${HOME}"/.fzf.zsh "${INSTALL_PATH}"/fzf/fzf.zsh
+    # extract the lines after "# Auto-completion"
+    tmp_number=$(sed -n '/Auto-completion/=' ${INSTALL_PATH}/fzf/fzf.zsh)
+    cat >> "${isrc}" << EOF
 # fzf basic config
-$(tail -n +${tmp_number} ./fzf/fzf.zsh | sed '/^$/d')
+$(tail -n +${tmp_number} ${INSTALL_PATH}/fzf/fzf.zsh | sed '/^$/d')
 
 EOF
-
+fi
+# add .local/bin
+echo -e "\nCreate sym-link (force):"
+for binfile in $(ls "${INSTALL_PATH}"/fzf/bin); do
+    echo -n "  "
+    ln -sfnv "${INSTALL_PATH}"/fzf/bin/"$binfile" "${lbp}"/"$binfile"
+done
 ## use as vim-plugin
 ## fuzzy finder
 #cat >> ${HOME}/.vim/dein.toml << EOF
 #[[plugin]]
-#repo = '${xdg_path}/fzf'
+#repo = '${XDG_PATH}/fzf'
 #[[plugin]]
 #repo = 'junegunn/fzf.vim'
 #EOF

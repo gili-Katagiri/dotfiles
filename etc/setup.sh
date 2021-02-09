@@ -5,7 +5,8 @@ set -u
 LOCAL_PATH="${HOME}"/.local
 LOCAL_BIN_PATH="${LOCAL_PATH}"/bin
 LOCAL_ETC_PATH="${LOCAL_PATH}"/etc
-mkdir -p "${LOCAL_ETC_PATH}" "${LOCAL_BIN_PATH}"
+LOCAL_OPT_PATH="${LOCAL_PATH}"/opt
+mkdir -p "${LOCAL_ETC_PATH}" "${LOCAL_BIN_PATH}" "${LOCAL_OPT_PATH}"
 
 # path to ???/dotfiles/*
 DOTFILES_ETC_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"
