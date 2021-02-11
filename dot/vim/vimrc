@@ -28,6 +28,11 @@ if dein#load_state(s:dein_dir)
     let s:toml = s:rc_dir . '/dein.toml'
     " read toml and cache
     call dein#load_toml(s:toml, {'lazy': 0})
+    " Add plugins installed without dein.vim
+    let s:extoml = expand('~/.local/etc/vim/exdein.toml')
+    if filereadable(s:extoml)
+        call dein#load_toml(s:extoml, {'lazy': 0})
+    endif
     " end settings
     call dein#end()
     call dein#save_state()

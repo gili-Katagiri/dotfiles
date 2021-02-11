@@ -138,12 +138,6 @@ hook_add = '''
 #    let g:ale_completion_autoimport = 1
 #'''
 
-# fuzzy finder
-[[plugins]]
-repo = '/home/gilito/.config/fzf'
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-
 # markdown viewer
 [[plugins]]
 repo = 'previm/previm'

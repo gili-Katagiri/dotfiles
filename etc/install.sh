@@ -43,11 +43,13 @@ for binfile in $(ls "${LOCAL_OPT_PATH}"/fzf/bin); do
     echo -n "  "
     ln -sfnv "${LOCAL_OPT_PATH}"/fzf/bin/"$binfile" "${LOCAL_BIN_PATH}"/"$binfile"
 done
-## use as vim-plugin
-## fuzzy finder
-#cat >> ${HOME}/.vim/dein.toml << EOF
-#[[plugin]]
-#repo = '${default_conf_strage}/fzf'
-#[[plugin]]
-#repo = 'junegunn/fzf.vim'
-#EOF
+# use as vim-plugin
+echo -e "\nAdd sentence to 'exdein.toml' to use as vim-plugin."
+cat > "${LOCAL_ETC_PATH}"/vim/exdein.toml << EOF
+# fuzzy finder
+[[plugins]]
+repo = '${LOCAL_OPT_PATH}/fzf'
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+
+EOF

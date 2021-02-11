@@ -44,6 +44,14 @@ esac
 
 EOF
 
+# Create for vim same reasons
+mkdir -p "${LOCAL_ETC_PATH}"/vim
+cat > "${LOCAL_ETC_PATH}"/vim/exdein.toml << EOF
+# These settings written from ${BASH_SOURCE[0]}
+# You can set up vim-plugins isntalled without dein.vim for each.
+
+EOF
+
 # Settings for the extended commands should be written separately from initrc
 # and managed as sym-links to dotfiles/etc/customrc/*.
 # Because:
