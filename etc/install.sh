@@ -6,7 +6,7 @@ set -u
 export XDG_CONFIG_HOME="${LOCAL_CONFIG_PATH}"
 
 # pre-installed commands check
-dependency_commands=("git")
+dependency_commands=("git" "docker")
 echo "Dependency commands:"
 for dcom in ${dependency_commands[@]}; do
     message=$($dcom --version 2>/dev/null)
@@ -18,6 +18,21 @@ for dcom in ${dependency_commands[@]}; do
 done
 
 # INSTALL ==========
+# Sytra -----
+if [ ! -d "${LOCAL_OPT_PATH}/sytra" ]; then
+    # clone from github
+    git clone https://github.com/gili-Katagiri/sytra-docker "${LOCAL_OPT_PATH}"/sytra-docker
+    # build as sytra:latest
+    docker build -t sytra:latest "${LOCAL_OPT_PATH}/sytra-docker"
+    # set local waypoint path
+    cat >> "${LOCAL_INIT_RC}" << EOF
+# sytra waypoint
+export SYTRA_WAYPOINT=${LOCAL_OPT_PATH}/sytra-docker
+
+EOF
+fi
+# enable to call sytra-entry as .local/bin/sytra
+ln -sfnv "${LOCAL_OPT_PATH}"/sytra-docker/sytra-entry.sh "${LOCAL_BIN_PATH}"/sytra
 
 # FZF -----
 # install fzf as ${LOCAL_OPT_PATH}/fzf from GitHub
