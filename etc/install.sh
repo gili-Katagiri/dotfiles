@@ -6,7 +6,7 @@ set -u
 export XDG_CONFIG_HOME="${LOCAL_CONFIG_PATH}"
 
 # pre-installed commands check
-dependency_commands=("git" "docker")
+dependency_commands=("git" "docker" "curl")
 echo "Dependency commands:"
 for dcom in ${dependency_commands[@]}; do
     message=$($dcom --version 2>/dev/null)
@@ -18,6 +18,12 @@ for dcom in ${dependency_commands[@]}; do
 done
 
 # INSTALL ==========
+# Node.js: ref https://github.com/vercel/install-node
+if !(type node > /dev/null 2>&1); then
+    echo "Install node into ${LOCAL_PATH}."
+    curl -Ls install-node.now.sh | bash -s -- --prefix=${LOCAL_PATH} --version=lts --yes
+fi
+
 # Sytra -----
 if [ ! -d "${LOCAL_OPT_PATH}/sytra" ]; then
     # clone from github

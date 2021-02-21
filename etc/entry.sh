@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # path to ~/.local/*
-LOCAL_PATH="${HOME}"/.local
+export LOCAL_PATH="${HOME}"/.local
 export LOCAL_BIN_PATH="${LOCAL_PATH}"/bin
 export LOCAL_ETC_PATH="${LOCAL_PATH}"/etc
 export LOCAL_OPT_PATH="${LOCAL_PATH}"/opt
