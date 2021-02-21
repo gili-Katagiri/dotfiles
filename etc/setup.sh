@@ -43,6 +43,8 @@ esac
 # Settings for each Ex-commands are continued ...
 
 EOF
+# add ~/.local/bin
+source "${LOCAL_INIT_RC}"
 
 # Create for vim same reasons
 mkdir -p "${LOCAL_ETC_PATH}"/vim

@@ -25,7 +25,8 @@ if !(type node > /dev/null 2>&1); then
 fi
 
 # Sytra -----
-if [ ! -d "${LOCAL_OPT_PATH}/sytra" ]; then
+if !(type sytra > /dev/null 2>&1); then
+    echo "Install sytra."
     # clone from github
     git clone https://github.com/gili-Katagiri/sytra-docker "${LOCAL_OPT_PATH}"/sytra-docker
     # build as sytra:latest
@@ -36,13 +37,16 @@ if [ ! -d "${LOCAL_OPT_PATH}/sytra" ]; then
 export SYTRA_WAYPOINT=${LOCAL_OPT_PATH}/sytra-docker
 
 EOF
+    # enable to call sytra-entry as .local/bin/sytra
+    ln -sfnv "${LOCAL_OPT_PATH}"/sytra-docker/sytra-entry.sh "${LOCAL_BIN_PATH}"/sytra
+    echo "You may need to call bellow command for extraction stock data,
+    which should be prepared as backup-file (e.g. backup.tar.gz) in previous environment."
+    echo "Command:    \'sytra extract -f backup.tar.gz\'"
 fi
-# enable to call sytra-entry as .local/bin/sytra
-ln -sfnv "${LOCAL_OPT_PATH}"/sytra-docker/sytra-entry.sh "${LOCAL_BIN_PATH}"/sytra
 
 # FZF -----
 # install fzf as ${LOCAL_OPT_PATH}/fzf from GitHub
-if [ ! -d "${LOCAL_OPT_PATH}/fzf" ]; then
+if !(type fzf > /dev/null 2>&1); then
     git clone --depth 1 https://github.com/junegunn/fzf.git "${LOCAL_OPT_PATH}"/fzf
     # Init
     # create ~/fzf.zsh but not update zshrc.
@@ -57,13 +61,13 @@ if [ ! -d "${LOCAL_OPT_PATH}/fzf" ]; then
 $(tail -n +${tmp_number} ${XDG_CONFIG_HOME}/fzf/fzf.zsh | sed '/^$/d')
 
 EOF
+    # add .local/bin
+    echo -e "\nCreate fzf sym-links:"
+    for binfile in $(ls "${LOCAL_OPT_PATH}"/fzf/bin); do
+	echo -n "  "
+	ln -sfnv "${LOCAL_OPT_PATH}"/fzf/bin/"$binfile" "${LOCAL_BIN_PATH}"/"$binfile"
+    done
 fi
-# add .local/bin
-echo -e "\nCreate sym-link (force):"
-for binfile in $(ls "${LOCAL_OPT_PATH}"/fzf/bin); do
-    echo -n "  "
-    ln -sfnv "${LOCAL_OPT_PATH}"/fzf/bin/"$binfile" "${LOCAL_BIN_PATH}"/"$binfile"
-done
 # use as vim-plugin
 echo -e "\nAdd sentence to 'exdein.toml' to use as vim-plugin."
 cat > "${LOCAL_ETC_PATH}"/vim/exdein.toml << EOF
