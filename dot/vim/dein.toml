@@ -50,6 +50,7 @@ hook_add = '''
        \'coc-json',
        \'coc-tsserver',
        \'coc-eslint',
+       \'coc-prettier',
        \'coc-vetur',
        \'coc-stylelint',
     \]
@@ -101,8 +102,10 @@ hook_add = '''
 	endif
     endfunction
 
-    "call format by :Format
+    " call format by :Format
     command! -nargs=0 Format :call CocAction('format')
+    " call Prettier by :Prettier
+    command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 '''
 
 # html tag creater

@@ -1,14 +1,15 @@
 {
-	"suggest.echodocSupport": true,
-	"suggest.maxCompleteItemCount": 20,
-	"tsserver.enable": true,
-	"typescript.validate.enable": true,
-	"javascript.validate.enable": true,
-	"typescript.format.enabled": true,
-	"javascript.format.enabled": true,
-	"coc.preferences.formatOnSaveFiletypes": [
-		"typescript",
-		"javascript",
-		"json"
-	]
+  // tsserver
+  "tsserver.enable": true,
+  "typescript.validate.enable": true,
+  "javascript.validate.enable": true,
+  "typescript.format.enabled": true,
+  "javascript.format.enabled": true,
+  // prettier
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  // coc global
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript", "json"]
 }
