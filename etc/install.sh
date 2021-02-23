@@ -24,6 +24,38 @@ if !(type node > /dev/null 2>&1); then
     curl -Ls install-node.now.sh | bash -s -- --prefix=${LOCAL_PATH} --version=lts --yes
 fi
 
+# install jq for to process json
+if !(type jq > /dev/null 2>&1); then
+    # binary install to .local/bin
+    (
+	temp_version=1.6
+	echo "Install jq v$temp_version ..."
+	# .local/opt/jq
+	mkdir -p "$LOCAL_OPT_PATH"/jq && cd $_
+	echo -n "Download ... "
+	( curl -sLO https://github.com/stedolan/jq/releases/download/jq-$temp_version/jq-linux64 && \
+	    curl -sLO https://raw.githubusercontent.com/stedolan/jq/master/sig/v$temp_version/sha256sum.txt ) || \
+	# failuer to download, exit this sub-shell
+	( echo "Error: Failed to download from $_" && false ) || exit 1 && \
+	# complete download
+	echo "Complete!"
+	# checksum and chmod and link
+	echo -n "Validation ... "
+	grep jq-linux64 sha256sum.txt | shasum -a 256 -c - || \
+	( echo "Error: Not match SHA256SUM." && false ) || exit 1 && \
+	echo "checksum 256: Complete!"
+	# post process
+	chmod 755 jq-linux64 && \
+	ln -sfnv $(pwd)/jq-linux64 "$LOCAL_BIN_PATH"/jq
+    )
+    if [ $? -ne 0 ]; then
+	echo "Fetal Error: Failed to install 'jq'."
+	exit 1
+    else
+	echo -e "jq installation accomplished!\n"
+    fi
+fi
+
 # Sytra -----
 if !(type sytra > /dev/null 2>&1); then
     echo "Install sytra."
