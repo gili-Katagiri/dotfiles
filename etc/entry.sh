@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
+set -a
 
 # path to ~/.local/*
-export LOCAL_PATH="${HOME}"/.local
-export LOCAL_BIN_PATH="${LOCAL_PATH}"/bin
-export LOCAL_ETC_PATH="${LOCAL_PATH}"/etc
-export LOCAL_OPT_PATH="${LOCAL_PATH}"/opt
-export LOCAL_CONFIG_PATH="${LOCAL_PATH}"/config
-export LOCAL_INIT_RC="${LOCAL_ETC_PATH}"/exinitrc
+LOCAL_PATH="${HOME}"/.local
+LOCAL_BIN_PATH="${LOCAL_PATH}"/bin
+LOCAL_ETC_PATH="${LOCAL_PATH}"/etc
+LOCAL_OPT_PATH="${LOCAL_PATH}"/opt
+LOCAL_CONFIG_PATH="${LOCAL_PATH}"/config
+LOCAL_INIT_RC="${LOCAL_ETC_PATH}"/exinitrc
 
 # path to ???/dotfiles/etc
-export DOTFILES_ETC_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"
+DOTFILES_ETC_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"
 
 # Check setup env
 echo -n "

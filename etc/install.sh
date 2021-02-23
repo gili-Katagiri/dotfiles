@@ -41,7 +41,7 @@ if !(type jq > /dev/null 2>&1); then
 	echo "Complete!"
 	# checksum and chmod and link
 	echo -n "Validation ... "
-	grep jq-linux64 sha256sum.txt | shasum -a 256 -c - || \
+	grep jq-linux64 sha256sum.txt | shasum -qa 256 -c - || \
 	( echo "Error: Not match SHA256SUM." && false ) || exit 1 && \
 	echo "checksum 256: Complete!"
 	# post process
@@ -110,3 +110,38 @@ repo = '${LOCAL_OPT_PATH}/fzf'
 repo = 'junegunn/fzf.vim'
 
 EOF
+
+# EXA -----
+if !(type exa > /dev/null 2>&1); then
+    (
+	echo "Install exa ."
+	mkdir -p "$LOCAL_OPT_PATH"/exa && cd $_
+	curl -sH "Accept: application/vnd.github.v3+json" \
+	    https://api.github.com/repos/ogham/exa/releases/latest \
+	    -o release_info.json
+	
+	zipurl=$(cat release_info.json | jq -r '.assets | map(select( .name | contains("linux-x86_64") )) | .[].browser_download_url')
+	shasumurl=$(cat release_info.json | jq -r '.assets | map(select( .name | contains("SHA1SUMS") )) | .[].browser_download_url')
+	
+	echo -n "Download ... "
+	( curl -sL "$zipurl" -o exa.zip && curl -sL "$shasumurl" -o sha1sum.txt ) || \
+	( echo "Failed to download from $_"; false ) || exit 1 && \
+	echo "Complete!"
+	
+	# get filename from exa.zip: *assumed to be included binary only*
+	echo -n "Validation ... "
+	fname=$(unzip -Z -1 exa.zip)
+	unzip -oq exa.zip && grep $fname sha1sum.txt | shasum -qa 1 -c - || \
+	( echo "Error: Not match SHA1SUM."; false ) || exit 1 && \
+	echo "checksum 1: Complete!"
+	
+	chmod 755 $fname && \
+	ln -sfnv $(pwd)/"$fname" "$LOCAL_BIN_PATH"/exa
+    )
+    if [ $? -ne 0 ]; then
+	echo "Error: Failed to install 'exa'."
+	echo "You should install manually or via package manager."
+    else
+	echo -e "exa installation accomplished!\n"
+    fi
+fi
