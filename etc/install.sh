@@ -6,7 +6,7 @@ set -u
 export XDG_CONFIG_HOME="${LOCAL_CONFIG_PATH}"
 
 # pre-installed commands check
-dependency_commands=("git" "docker" "curl")
+dependency_commands=("git" "docker" "curl" "python3")
 echo "Dependency commands:"
 for dcom in ${dependency_commands[@]}; do
     message=$($dcom --version 2>/dev/null)
@@ -143,5 +143,27 @@ if !(type exa > /dev/null 2>&1); then
 	echo "You should install manually or via package manager."
     else
 	echo -e "exa installation accomplished!\n"
+    fi
+fi
+
+# poetry -----
+if !(type poetry > /dev/null 2>&1); then
+    (
+	echo "Install poetry ... "
+	export POETRY_HOME="$LOCAL_OPT_PATH/poetry"
+	mkdir -p "$POETRY_HOME" && cd $_
+	echo -n "Download and Install ... "
+	curl -sSLO https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py || \
+	( echo "Failed to download from $_"; false ) || exit 1 && \
+	no | python3 get-poetry.py --no-modify-path || \
+	( echo "Failed to install"; false ) || exit 1 && \
+	echo "Complete!"
+	ln -sfnv $(pwd)/bin/poetry "$LOCAL_BIN_PATH"/poetry
+    )
+    if [ $? -ne 0 ]; then
+	echo "Error: Failed to install 'poetry'. "
+	echo "You should install manually or via package manager."
+    else
+	echo -e "poetry installation accomplished!\n"
     fi
 fi
