@@ -6,5 +6,6 @@
 [core]
 	editor = vim -c \"set fenc=utf-8\"
 [alias]
-	dlog = log --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=iso
+	golog = log --graph --oneline
+	dlog = log --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=iso -n 15
 	dst = status --short --branch
