@@ -146,6 +146,35 @@ if !(type exa > /dev/null 2>&1); then
     fi
 fi
 
+# FD -----
+if !(type fd > /dev/null 2>&1); then
+    (
+        echo "Install fd ."
+        mkdir -p "$LOCAL_OPT_PATH"/fd && cd $_
+        curl -sH "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/sharkdp/fd/releases/latest \
+            -o release_info.json
+
+        # select musl: this is STATIC
+        tarurl=$(cat release_info.json | jq -r '.assets | map(select( .name | contains("x86_64-unknown-linux-musl") )) | .[].browser_download_url')
+
+        echo -n "Install ... "
+        ( curl -sL "$tarurl" -o fd_musl.tar.gz ) || \
+        ( echo "Failed to download from $_"; false ) || exit 1 && \
+        tar xzvf fd_musl.tar.gz --strip-components=1 && \
+        echo "Complete!"
+
+        chmod 755 fd && \
+        ln -sfnv $(pwd)/fd "$LOCAL_BIN_PATH"/fd
+    )
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to install 'fd'."
+        echo "You should install manually or via package manager."
+    else
+        echo -e "fd installation accomplished!\n"
+    fi
+fi
+
 # poetry -----
 if !(type poetry > /dev/null 2>&1); then
     (
