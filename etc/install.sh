@@ -108,7 +108,10 @@ cat > "${LOCAL_ETC_PATH}"/vim/exdein.toml << EOF
 repo = '${LOCAL_OPT_PATH}/fzf'
 [[plugins]]
 repo = 'junegunn/fzf.vim'
-
+hook_add = '''
+    nmap ,b :Buffers<CR>
+    nmap ,t :Files<CR>
+'''
 EOF
 
 # EXA -----
