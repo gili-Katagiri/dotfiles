@@ -8,6 +8,7 @@ LOCAL_ETC_PATH="${LOCAL_PATH}"/etc
 LOCAL_OPT_PATH="${LOCAL_PATH}"/opt
 LOCAL_CONFIG_PATH="${LOCAL_PATH}"/config
 LOCAL_INIT_RC="${LOCAL_ETC_PATH}"/exinitrc
+LOCAL_MANUAL_PATH="${LOCAL_PATH}/share/man"
 
 # path to ???/dotfiles/etc
 DOTFILES_ETC_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"

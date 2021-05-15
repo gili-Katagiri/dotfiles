@@ -40,6 +40,16 @@ case ":\${PATH}:" in
         ;;
 esac
 
+# set manpath
+default_manpath=\$(manpath)
+case ":\${default_manpath}:" in
+    *:\${LOCAL_MANUAL_PATH}:*)
+        ;;
+    *)
+        export MANPATH="${LOCAL_MANUAL_PATH}:\$default_manpath"
+        ;;
+esac
+
 # Settings for each Ex-commands are continued ...
 
 EOF
