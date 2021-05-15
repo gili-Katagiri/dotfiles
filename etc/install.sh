@@ -79,10 +79,11 @@ fi
 # FZF -----
 # install fzf as ${LOCAL_OPT_PATH}/fzf from GitHub
 if !(type fzf > /dev/null 2>&1); then
-    git clone --depth 1 https://github.com/junegunn/fzf.git "${LOCAL_OPT_PATH}"/fzf
+    fzf_root="${LOCAL_OPT_PATH}/fzf"
+    git clone --depth 1 https://github.com/junegunn/fzf.git "${fzf_root}"
     # Init
     # create ~/fzf.zsh but not update zshrc.
-    "${LOCAL_OPT_PATH}"/fzf/install\
+    "${fzf_root}"/install\
       --xdg --key-bindings --completion --no-update-rc \
       --no-bash --no-fish
     # fzf.zsh would be created as ${XDG_CONFIG_HOME}/fzf/fzf.zsh
@@ -95,9 +96,17 @@ $(tail -n +${tmp_number} ${XDG_CONFIG_HOME}/fzf/fzf.zsh | sed '/^$/d')
 EOF
     # add .local/bin
     echo -e "\nCreate fzf sym-links:"
-    for binfile in $(ls "${LOCAL_OPT_PATH}"/fzf/bin); do
-	echo -n "  "
-	ln -sfnv "${LOCAL_OPT_PATH}"/fzf/bin/"$binfile" "${LOCAL_BIN_PATH}"/"$binfile"
+    for binfile in "${fzf_root}"/bin/*; do
+        echo -n "  "
+        ln -sfnv "$binfile" "${LOCAL_BIN_PATH}/$(basename $binfile)"
+    done
+    # manuals
+    # opt/fzf/man/man1
+    target="man1"
+    mkdir -p "${LOCAL_MANUAL_PATH}/man1"
+    for f in "${fzf_root}/man/man1"/*; do
+        echo -n "  "
+        ln -sfnv "$f" "${LOCAL_MANUAL_PATH}/man1/$(basename $f)"
     done
 fi
 # use as vim-plugin
