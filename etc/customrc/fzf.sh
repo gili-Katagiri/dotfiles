@@ -14,3 +14,21 @@ export FZF_COMPLETION_TRIGGER='//'
   opt="$opt --select-1 --exit-0"
   export FZF_ALT_C_OPTS="$opt"
 }
+
+# fzf-completion does not look for hidden files
+_fzf_compgen_path() {
+  fd --follow . "$1"
+}
+_fzf_compgen_dir() {
+  fd --type d --follow . "$1"
+}
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)     fzf "$@" --preview 'tree -C {} | head -100' ;;
+    *)      fzf "$@" ;;
+  esac
+}
