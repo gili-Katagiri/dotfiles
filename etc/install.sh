@@ -162,7 +162,7 @@ fi
 if !(type fd > /dev/null 2>&1); then
     (
         echo "Install fd ."
-        mkdir -p "$LOCAL_OPT_PATH"/fd && cd $_
+        mkdir -p "${LOCAL_OPT_PATH}/fd" && cd $_
         curl -sH "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/sharkdp/fd/releases/latest \
             -o release_info.json
@@ -177,7 +177,8 @@ if !(type fd > /dev/null 2>&1); then
         echo "Complete!"
 
         chmod 755 fd && \
-        ln -sfnv $(pwd)/fd "$LOCAL_BIN_PATH"/fd
+        ln -sfnv "$(pwd)/fd" "${LOCAL_BIN_PATH}/fd"
+        ln -sfnv "$(pwd)/fd.1" "${LOCAL_MANUAL_PATH}/man1/fd.1"
     )
     if [ $? -ne 0 ]; then
         echo "Error: Failed to install 'fd'."
