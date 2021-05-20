@@ -107,11 +107,12 @@ set wildmenu
 set wildmode=list:longest
 
 " print tab as >--
-set tabstop=8
+set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set noexpandtab
+set expandtab
 set list listchars=tab:>-,trail:-
+autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 " search options
 set ignorecase
@@ -124,3 +125,9 @@ nmap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 " Insert-mode line move
 inoremap <C-H> <Home>
 inoremap <C-L> <End>
+
+let g:mapleader = ","
+nnoremap j gj
+nnoremap k gk
+nnoremap <LEADER>r :%s;\<<C-R><C-W>\>;g<Left><Left>;
+nnoremap <LEADER>q :wq<CR>
