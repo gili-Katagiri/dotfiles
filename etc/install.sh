@@ -24,6 +24,16 @@ if !(type node > /dev/null 2>&1); then
     curl -Ls install-node.now.sh | bash -s -- --prefix=${LOCAL_PATH} --version=lts --yes
 fi
 
+# Rust: https://rust-lang.github.io/rustup/installation/index.html
+if !(type rustup > /dev/null 2>&1); then
+    # Confirmed that changing these variables may cause unintended behavior.
+    #export RUSTUP_HOME="$HOME/.rustup"
+    #export CARGO_HOME="$HOME/.cargo"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+        sh -s -- -y -q --default-toolchain stable
+    source "${CARGO_HOME:-$HOME/.cargo/env}"
+fi
+
 # install jq for to process json
 if !(type jq > /dev/null 2>&1); then
     # binary install to .local/bin
