@@ -2,15 +2,7 @@
 
 set -u
 
-DOTFILES_DOT_PATH="$(dirname "${DOTFILES_ETC_PATH}")/dot"
 DOTFILES_BIN_PATH="$(dirname "${DOTFILES_ETC_PATH}")/bin"
-
-# Link to ~/.$dotfile*
-echo "Create configuration links to ${HOME}:"
-for dotfile in $(ls ${DOTFILES_DOT_PATH}); do
-    echo -n "  "
-    ln -snv "${DOTFILES_DOT_PATH}"/"$dotfile" "${HOME}"/."$dotfile" 2>&1
-done
 
 # bin/ setup --------------------------------------------------
 # Link to ~/.local/bin/$binfile
