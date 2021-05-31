@@ -24,14 +24,14 @@ Confirm setup environment:
 
 Are you OK? (y/N): "
 read confirm
-case $confirm in 
+case $confirm in
     [Yy]|[Yy][Ee][Ss])
-    mkdir -p "${LOCAL_ETC_PATH}" "${LOCAL_BIN_PATH}" \
-        "${LOCAL_OPT_PATH}" "${LOCAL_CONFIG_PATH}"
-    ;;
+      mkdir -p "${LOCAL_ETC_PATH}" "${LOCAL_BIN_PATH}" \
+          "${LOCAL_OPT_PATH}" "${LOCAL_CONFIG_PATH}"
+      ;;
     *)
-    exit 1
-    ;;
+      exit 1
+      ;;
 esac
 
 # setup

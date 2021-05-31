@@ -2,17 +2,6 @@
 
 set -u
 
-DOTFILES_BIN_PATH="$(dirname "${DOTFILES_ETC_PATH}")/bin"
-
-# bin/ setup --------------------------------------------------
-# Link to ~/.local/bin/$binfile
-echo "Create binary links to ${LOCAL_BIN_PATH}:"
-for binfile in $(ls ${DOTFILES_BIN_PATH}); do
-    echo -n "  "
-    ln -snv "${DOTFILES_BIN_PATH}"/"$binfile" "${LOCAL_BIN_PATH}"/"$binfile" 2>&1
-done
-# =============================================================
-
 # etc/ setup --------------------------------------------------
 # If tool's installer were to create rc-file based on your env at installation,
 # it should be written to ~/.local/etc/exinitrc additionaly with some fix.
