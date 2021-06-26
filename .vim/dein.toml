@@ -107,6 +107,9 @@ hook_add = '''
     " call Prettier by :Prettier
     command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 '''
+# syntax highlight for ts(x)
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
 
 # html tag creater
 [[plugins]]
@@ -114,7 +117,10 @@ repo = 'mattn/emmet-vim'
 hook_add = '''
     " enable just for html/css/vue
     let g:user_emmet_install_global = 0
-    autocmd FileType html,css,vue EmmetInstall
+    autocmd FileType 
+      \html,css,vue,
+      \javascript,javascriptreact,typescript,typescriptreact
+      \ EmmetInstall
     " setting
     let g:user_emmet_settings = {
     \   'variables': {
