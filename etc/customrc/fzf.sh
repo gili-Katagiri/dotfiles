@@ -20,7 +20,9 @@ export FZF_ALT_C_COMMAND="fd --type d --follow"
 # Policy: NOT to target hidden files
 
 # comflict with zprezto '**'
-export FZF_COMPLETION_TRIGGER='//'
+export FZF_COMPLETION_TRIGGER='~~'
+# completion of following command targets directory
+export FZF_COMPLETION_DIR_COMMANDS="cd pushd rmdir ls"
 # fzf-completion does not look for hidden files
 _fzf_compgen_path() {
   fd --follow . "$1"
